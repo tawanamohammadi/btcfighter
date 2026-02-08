@@ -21,6 +21,16 @@ export class BalanceChecker {
             url: (addr: string) => `https://blockstream.info/api/address/${addr}`,
             parse: (resp: any) => resp.data.chain_stats.funded_txo_sum - resp.data.chain_stats.spent_txo_sum,
             name: 'Blockstream.info'
+        },
+        {
+            url: (addr: string) => `https://api.blockcypher.com/v1/btc/main/addrs/${addr}/balance`,
+            parse: (resp: any) => resp.data.balance,
+            name: 'BlockCypher'
+        },
+        {
+            url: (addr: string) => `https://chain.so/api/v2/get_address_balance/BTC/${addr}`,
+            parse: (resp: any) => Math.floor(parseFloat(resp.data.data.confirmed_balance) * 100000000),
+            name: 'Chain.so'
         }
     ];
 
